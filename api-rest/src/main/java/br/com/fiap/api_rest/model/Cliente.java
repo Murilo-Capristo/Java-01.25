@@ -9,14 +9,15 @@ import jakarta.persistence.Id;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String nome;
     private int idade;
+
 
     public Cliente() {
     }
 
-    public Cliente(long id, String nome, int idade) {
+    public Cliente(Long id, String nome, int idade) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
