@@ -22,5 +22,8 @@ public class Cliente {
     private String cpf;
     private Categoria categoria;
 
+    public Cliente() {
+
+    }
 }
 
