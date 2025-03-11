@@ -17,11 +17,7 @@ public class ValidationExceptionHandler {
         Map<String, String> errors = new HashMap<>();
         for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
             errors.put(fieldError.getField(), fieldError.getDefaultMessage());
-
         }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-
     }
-
-
 }

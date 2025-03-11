@@ -5,8 +5,6 @@ import br.com.fiap.api_rest.dto.ClienteRequest;
 import br.com.fiap.api_rest.dto.ClienteResponse;
 import br.com.fiap.api_rest.model.Cliente;
 import br.com.fiap.api_rest.repository.ClienteRepository;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
@@ -20,15 +18,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class ClienteService {
-
     private final ClienteRepository clienteRepository;
 
     public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
+//    @Autowired
+//    ClienteRepository clienteRepository;
 
     public Cliente requestToCliente(ClienteRequest clienteRequest) {
-
         return new Cliente(null,
                 clienteRequest.getNome(),
                 clienteRequest.getIdade(),
@@ -36,28 +34,23 @@ public class ClienteService {
                 clienteRequest.getSenha(),
                 clienteRequest.getCpf(),
                 clienteRequest.getCategoria());
-
     }
 
     public ClienteResponse clienteToResponse(Cliente cliente, boolean self) {
         Link link;
-        if (self){
+        if (self) {
             link = linkTo(
                     methodOn(
                             ClienteController.class
                     ).readCliente(cliente.getId())
             ).withSelfRel();
-        }
-        else{
-
+        } else {
             link = linkTo(
                     methodOn(
                             ClienteController.class
                     ).readClientes(0)
             ).withRel("Lista de Clientes");
         }
-
-
         return new ClienteResponse(cliente.getId(), cliente.getNome(), link);
     }
 
@@ -67,15 +60,14 @@ public class ClienteService {
             clientesResponse.add(clienteToResponse(cliente, true));
         }
         return clientesResponse;
+        // return clientes.stream().map(this::clienteToResponse).collect(Collectors.toList());
     }
-
 
     public Page<ClienteResponse> findAll(Pageable pageable) {
-        // quero buscar todos os clientes, convertê-los para response dentro de uma página
-        return clienteRepository.findAll(pageable).map(cliente -> clienteToResponse(cliente, false));
-      //return clienteRepository.findAll(pageable).map(this::clienteToResponse);
-
+        // busca os clientes de acordo com a configuração do pageable,
+        // converte para response e retorna como um Page<ClienteResponse>
+        return clienteRepository.findAll(pageable)
+                .map(cliente -> clienteToResponse(cliente, true));
+        //return clienteRepository.findAll(pageable).map(this::clienteToResponse);
     }
-
-
 }
