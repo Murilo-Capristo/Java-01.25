@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.Date;
+
 @Entity
 public class Cliente {
     @Id
@@ -13,10 +15,12 @@ public class Cliente {
     private Long id;
     private String nome;
     private int idade;
+    private Date dataNascimento;
     private String email;
     private String senha;
     private String cpf;
     private Categoria categoria;
+    private boolean vip;
 
     public Cliente() {
     }
@@ -29,6 +33,22 @@ public class Cliente {
         this.senha = senha;
         this.cpf = cpf;
         this.categoria = categoria;
+    }
+
+    public boolean isVip() {
+        return vip;
+    }
+
+    public void setVip(boolean vip) {
+        this.vip = vip;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public Long getId() {
