@@ -20,6 +20,11 @@ public class Filial {
         return clientes;
     }
 
+    public Filial(String nome, Endereco endereco) {
+        this.nome = nome;
+        this.endereco = endereco;
+    }
+
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
     }
